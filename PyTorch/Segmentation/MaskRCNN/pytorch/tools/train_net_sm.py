@@ -6,6 +6,7 @@ import datetime
 import shutil
 import json
 
+os.environ['NCCL_DEBUG'] = 'INFO'
 
 def main():
     parser = argparse.ArgumentParser(description="PyTorch Object Detection Training")

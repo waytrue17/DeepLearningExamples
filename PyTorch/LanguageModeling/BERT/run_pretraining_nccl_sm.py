@@ -9,6 +9,7 @@ import shutil
 import json
 
 os.environ['HDF5_USE_FILE_LOCKING'] = 'FALSE'
+os.environ['NCCL_DEBUG'] = 'INFO'
 
 
 def parse_args():
