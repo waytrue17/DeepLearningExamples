@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     cmd = f"python -m torch.distributed.launch --nnodes={num_nodes} --node_rank={rank} --nproc_per_node={num_gpus} \
         --master_addr={hosts[0]} --master_port='12345' \
-    {main_path} --data {data_dir} --epochs {epochs} --backbone {backbone} --learning_rate {learning_rate} --warmup {warmup} --bs {bs} --evaluation {evaluation} --seed {seed} {amp}"
+    {main_path} --data {data_dir} --epochs {epochs} --backbone {backbone} --learning-rate {learning_rate} --warmup {warmup} --bs {bs} --evaluation {evaluation} --seed {seed} {amp}"
 
     print (cmd)
     invoke_train(cmd)
