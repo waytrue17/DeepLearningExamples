@@ -8,7 +8,7 @@ os.environ['NCCL_DEBUG'] = 'INFO'
 def parse_args():
     parser = argparse.ArgumentParser(description='Get model info')
     parser.add_argument('--num_nodes', type=int, help='Number of nodes')
-    # parser.add_argument('--data', type=str, help='Path to data')
+    parser.add_argument('--data', type=str, help='Path to data')
     parser.add_argument('--epochs', type=int, help='Number of epochs')
     parser.add_argument('--backbone', type=str, help='Backbone')
     parser.add_argument('--learning-rate', type=float, help='Learning rate')
@@ -45,7 +45,7 @@ def invoke_train(cmd):
 if __name__ == "__main__":
     args = parse_args()
     num_nodes = args.num_nodes
-    # data = args.data
+    data = args.data
     epochs = args.epochs
     backbone = args.backbone
     learning_rate = args.learning_rate
