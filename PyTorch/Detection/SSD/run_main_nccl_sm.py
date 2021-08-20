@@ -4,6 +4,7 @@ import subprocess
 import json
 
 os.environ['NCCL_DEBUG'] = 'INFO'
+os.environ['FI_EFA_USE_DEVICE_RDMA'] = '1'
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Get model info')
