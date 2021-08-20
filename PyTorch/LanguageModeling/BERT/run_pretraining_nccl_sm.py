@@ -10,6 +10,7 @@ import json
 
 os.environ['HDF5_USE_FILE_LOCKING'] = 'FALSE'
 os.environ['NCCL_DEBUG'] = 'INFO'
+os.environ['FI_EFA_USE_DEVICE_RDMA'] = '1'
 
 
 def parse_args():
