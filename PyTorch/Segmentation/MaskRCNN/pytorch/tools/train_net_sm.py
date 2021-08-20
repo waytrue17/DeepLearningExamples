@@ -7,6 +7,7 @@ import shutil
 import json
 
 os.environ['NCCL_DEBUG'] = 'INFO'
+os.environ['FI_EFA_USE_DEVICE_RDMA'] = '1'
 
 def main():
     parser = argparse.ArgumentParser(description="PyTorch Object Detection Training")
