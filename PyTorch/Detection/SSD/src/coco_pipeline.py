@@ -231,7 +231,8 @@ class DALICOCOIterator(object):
                 for k in range(len(l_list)):
                     if (pyt_labels[j][k].shape[0] != 0):
                         feed_ndarray(l_list[k], pyt_labels[j][k])
-                pyt_labels[j] = torch.cat(pyt_labels[j]).squeeze(dim=1)
+                # https://github.com/NVIDIA/DeepLearningExamples/issues/848
+                pyt_labels[j] = torch.cat(pyt_labels[j])
 
             for j in range(len(pyt_offsets)):
                 pyt_offsets[j] = torch.IntTensor(bbox_offsets[j])

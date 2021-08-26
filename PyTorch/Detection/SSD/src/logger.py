@@ -25,6 +25,14 @@ class EpochMeter:
     def update(self, epoch, val):
         self.data.append((epoch, val))
 
+class ThroughputMeter:
+    def __init__(self, name):
+        self.name = name
+        self.data = []
+
+    def update(self, epoch, val):
+        self.data.append((epoch, val))
+
 
 class IterationMeter:
     def __init__(self, name):
@@ -58,6 +66,7 @@ class Logger:
         self.name = name
         self.train_loss_logger = IterationAverageMeter("Training loss")
         self.train_epoch_time_logger = EpochMeter("Training 1 epoch time")
+        self.train_epoch_throughput_logger = ThroughputMeter("Training 1 epoch throughput")
         self.val_acc_logger = EpochMeter("Validation accuracy")
         self.print_freq = print_freq
 
@@ -110,7 +119,12 @@ class Logger:
     def update_epoch_time(self, epoch, time):
         self.epoch = epoch
         self.train_epoch_time_logger.update(epoch, time)
-        DLLogger.log((self.epoch,), { 'time': time })
+        DLLogger.log((self.epoch,), { 'time': '%.2f' % time + ' secs'  })
+
+    def update_throughput_speed(self, epoch, throughput):
+        self.epoch = epoch
+        self.train_epoch_throughput_logger.update(epoch, throughput)
+        DLLogger.log((self.epoch,), { 'Training Speed': '%.2f' % throughput + ' samples/sec' })
 
     def print_results(self):
         return self.train_loss_logger.data, self.val_acc_logger.data, self.train_epoch_time_logger

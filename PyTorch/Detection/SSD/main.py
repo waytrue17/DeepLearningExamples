@@ -123,6 +123,7 @@ def make_parser():
 def train(train_loop_func, logger, args):
     # Check that GPUs are actually available
     use_cuda = not args.no_cuda
+    train_samples = 118287
 
     # Setup multi-GPU if necessary
     args.distributed = False
@@ -214,8 +215,10 @@ def train(train_loop_func, logger, args):
         if epoch in args.evaluation:
             acc = evaluate(ssd300, val_dataloader, cocoGt, encoder, inv_map, args)
 
-            if args.local_rank == 0:
-                logger.update_epoch(epoch, acc)
+        if args.local_rank == 0:
+            throughput = train_samples / end_epoch_time
+            logger.update_epoch_time(epoch, end_epoch_time)
+            logger.update_throughput_speed(epoch, throughput)
 
         if args.save and args.local_rank == 0:
             print("saving model...")
@@ -232,8 +235,10 @@ def train(train_loop_func, logger, args):
             torch.save(obj, save_path)
             logger.log('model path', save_path)
         train_loader.reset()
-    DLLogger.log((), { 'total time': total_time })
-    logger.log_summary()
+
+    if args.local_rank == 0:
+        DLLogger.log((), { 'Total training time': '%.2f' % total_time + ' secs' })
+        logger.log_summary()
 
 
 def log_params(logger, args):
