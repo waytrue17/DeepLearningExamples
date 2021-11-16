@@ -49,6 +49,11 @@ from mask_rcnn.hyperparameters import params_io
 from mask_rcnn.hooks import CheckpointSaverHook
 from mask_rcnn.hooks import PretrainedWeightsLoadingHook
 
+# Sagemaker uses s3 to save model, and since 2.6 s3 support needs tensorflow-io package
+# https://giters.com/tensorflow/tensorflow/issues/51583?amp=1
+from distutils.version import LooseVersion
+if LooseVersion(tf.__version__) >= LooseVersion("2.6"):
+    import tensorflow_io as tfio
 
 def get_training_hooks(mode, model_dir, checkpoint_path=None, skip_checkpoint_variables=None):
 

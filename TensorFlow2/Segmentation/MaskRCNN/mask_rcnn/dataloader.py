@@ -201,11 +201,12 @@ class InputReader(object):
         data_options.experimental_optimization.map_fusion = True
         data_options.experimental_optimization.map_parallelization = True
 
-        map_vectorization_options = tf.data.experimental.MapVectorizationOptions()
-        map_vectorization_options.enabled = True
-        map_vectorization_options.use_choose_fastest = True
+        if LooseVersion(tf.__version__) < LooseVersion("2.6"):
+            map_vectorization_options = tf.data.experimental.MapVectorizationOptions()
+            map_vectorization_options.enabled = True
+            map_vectorization_options.use_choose_fastest = True
 
-        data_options.experimental_optimization.map_vectorization = map_vectorization_options
+            data_options.experimental_optimization.map_vectorization = map_vectorization_options
 
         data_options.experimental_optimization.noop_elimination = True
         data_options.experimental_optimization.parallel_batch = True
